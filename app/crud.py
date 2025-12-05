@@ -44,3 +44,18 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+#Borrow/Return
+def borrow_book(db: Session, borrow: schemas.BorrowedCreate):
+    # can mark a book as borrowed.
+        # - borrowed_ate defaults to today's date if not provided.
+    
+    borrowed_date = borrowed.borrowed_date or datetime.date.today()
+    record = models.BorrowedBooks(
+        user_id=borrowed.user_id,
+        book_id=borrow.book_id,
+        borrowed_date=borrowed_date
+    )
+    db.add(record)
+    db.commit()
+    return record
