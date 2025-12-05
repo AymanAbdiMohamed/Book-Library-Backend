@@ -31,3 +31,16 @@ de create_book(db: Session, book: schemas.BookCreate):
     db.commit()
     db.refresh(db_book)
     return db_book
+
+#Users
+def get_users(db: Session):
+    # fetch all users from the system
+    return db.query(models.Users).all()
+
+def create_user(db: Session, user: schemas.UserCreate):
+    # create a new user with name and email
+    db_user = models.User(name=user.name, email=user.email)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
