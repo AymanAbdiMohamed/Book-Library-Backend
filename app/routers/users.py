@@ -82,3 +82,9 @@ def return_book(borrow: schemas.BorrowedCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/{user_id}}/borrowed", response_model=list[schemas.BorrowedBase])
+def user_borrowed(user_id: int, db: Session = Depends(get_db)):
+    """
+    Get all borrowed books for a specific user.
+    Dlegates the lookup to the crud layer.
+    """
+    return crud.get_borrowed_for_user(db, user_id)
