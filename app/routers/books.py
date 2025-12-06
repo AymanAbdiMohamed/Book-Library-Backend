@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from ..import schemas, models, crud
+from .. import schemas, models, crud
 from ..deps import get_db
 
 # router for all book-related endpoints

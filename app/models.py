@@ -17,6 +17,7 @@ class Book(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
     author = Column(String)
+    pages = Column(Integer, nullable=True)
     genre_id = Column(Integer, ForeignKey("genres.id"))
 
     genre = relationship("Genre", back_populates="books")
@@ -26,7 +27,7 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
+    name = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
 
 
