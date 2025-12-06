@@ -75,3 +75,9 @@ def return_book(db: Session, borrow: schemas.BorrowedCreate):
     rec.return_date = borrow.return_date or datetime.date.today()
     db.commit()
     return rec
+
+def get_borrowed_for_user(db: Session, user_id: int):
+    # ftech all borrowed-book records for a specific user
+    return db.query(models.BorrowedBooks).filter(
+        models.BorrowedBooks.user_id == user_id
+    ).all()
