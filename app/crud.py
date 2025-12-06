@@ -59,3 +59,19 @@ def borrow_book(db: Session, borrow: schemas.BorrowedCreate):
     db.add(record)
     db.commit()
     return record
+
+def return_book(db: Session, borrow: schemas.BorrowedCreate):
+    # mark a borrowed book as returned.
+    # - finds the matching borrow record and sets returned_date to today's date.
+    rec = db.query(models.BorrowedBooks).filter(
+        models.BorrowedBooks.user_id == borrowed.user_id,
+        models.BorrowedBooks.book_id == borrowed.book_id
+    ).first()
+
+    if not rec:
+        # no borrowed record found for this user/book
+        return None
+    
+    rec.return_date = borrow.return_date or datetime.date.today()
+    db.commit()
+    return rec
