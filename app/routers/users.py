@@ -63,3 +63,22 @@ def borrow_book(borrow: schemas.BorrowedCreate, db: Session = Depends(get_db)):
 
     # Create borrow record through CRUD
     return crud.borrow_book(db, borrow)
+
+
+@router.post("/return", respomse_model=schemas.BorrowedBase)
+def return_book(borrow: schemas.BorrowedCreate, db: Session = Depends(get_db)):
+    """
+    Mark a borrowed book as returned by a user.
+    - This looks up the borrow record.
+    - If record does not exist -> 404 error.
+    - Otherwise -> delete the borrow record via CRUD.
+    """
+    rec = crud.return_book(db, borrow)
+
+    if not rec:
+        raise HTTPException(status_code=404, detail="Borrow record not found")
+    
+    return rec
+
+
+@router.get("/{user_id}}/borrowed", response_model=list[schemas.BorrowedBase])
