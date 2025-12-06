@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from ..import schemas, models, crud
-from ..departments import get_db
+from ..deps import get_db
 
 # router for all book-related endpoints
 # prefix="/books" -> every endpoint starts with /books

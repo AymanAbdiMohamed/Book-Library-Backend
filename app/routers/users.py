@@ -65,7 +65,7 @@ def borrow_book(borrow: schemas.BorrowedCreate, db: Session = Depends(get_db)):
     return crud.borrow_book(db, borrow)
 
 
-@router.post("/return", respomse_model=schemas.BorrowedBase)
+@router.post("/return", response_model=schemas.BorrowedBase)
 def return_book(borrow: schemas.BorrowedCreate, db: Session = Depends(get_db)):
     """
     Mark a borrowed book as returned by a user.
