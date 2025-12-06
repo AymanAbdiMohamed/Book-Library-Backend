@@ -23,3 +23,9 @@ def create_books(book: schemas.BookCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Genre not found")
     # pass the data to the CRUD function to create the new book
     return crud.create_book(db=db, book=book)
+
+@router.get("/", response_model=list[schemas.Book])
+def list_books(db: Session = Depends(get_db)):
+    # return a list of all books in the database
+    # simpliy calls the CRUD layer to fetch all records
+    return crud.get_books(db)
