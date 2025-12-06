@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Date  # <-- added Date
 from sqlalchemy.orm import relationship
 from .database import Base
 
@@ -29,6 +29,7 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
 
+
 class BorrowedBooks(Base):
     __tablename__ = "borrowed_books"
 
@@ -36,4 +37,3 @@ class BorrowedBooks(Base):
     book_id = Column(Integer, ForeignKey("books.id"), primary_key=True)
     borrowed_date = Column(Date)
     return_date = Column(Date)
-
