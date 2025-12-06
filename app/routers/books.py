@@ -29,3 +29,10 @@ def list_books(db: Session = Depends(get_db)):
     # return a list of all books in the database
     # simpliy calls the CRUD layer to fetch all records
     return crud.get_books(db)
+
+@router.get("/genre/{genre_id}", response_model=list[schemas.Book])
+def book_by_genre(genre_id: int, db: Session = Depends(get_db)):
+    # Return all books that belong to a specific genre
+    # genre_id: the ID of the genre to filter books by
+    # delegates the filtering logic to the CRUD layer
+    return crud.get_books_by_genre(db, genre_id=genre_id)
