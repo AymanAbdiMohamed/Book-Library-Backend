@@ -19,7 +19,7 @@ def create_genre(db: Session, genre: schemas.GenreCreate):
 def get_books(db: Session):
     return db.query(models.Books).all()
 
-de create_book(db: Session, book: schemas.BookCreate):
+def create_book(db: Session, book: schemas.BookCreate):
     # create a new book entry
     db_book = models.Boook(
         title=book.title,

@@ -18,9 +18,9 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from models import Base  # Import your Base where models are defined
-from app.database import engine  # Import the engine from your database module
+from app.database import Base  # Import the Base from your database module
 target_metadata = Base.metadata
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
