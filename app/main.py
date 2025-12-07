@@ -15,11 +15,15 @@ app = FastAPI(title="Book Library API")
 # This allows your React frontend (localhost:3000) to call the API.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Allowed frontend origin
+    allow_origins=["http://localhost:5173"],  # Vite frontend URL
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, PUT, DELETE...)
-    allow_headers=["*"],  # Allow all custom headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+
+
+
+
 
 # Register all routers (genres, books, users)
 # These handle the API endpoints under /genres, /books, /users
