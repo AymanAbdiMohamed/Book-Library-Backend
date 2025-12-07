@@ -41,6 +41,24 @@ def list_users(db: Session = Depends(get_db)):
     return crud.get_users(db)
 
 
+@router.delete("/{user_id}", response_model=schemas.User)
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    """
+    Delete a user by ID.
+
+    - `user_id`: The ID of the user to delete.
+    - `db`: SQLAlchemy session.
+    
+    Returns the deleted user or raises a 404 error if not found.
+    """
+    deleted_user = crud.delete_user(db, user_id)
+    
+    if not deleted_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    return deleted_user
+
+
 @router.post("/borrow", response_model=schemas.BorrowedBase)
 def borrow_book(borrow: schemas.BorrowedCreate, db: Session = Depends(get_db)):
     """
@@ -88,3 +106,22 @@ def user_borrowed(user_id: int, db: Session = Depends(get_db)):
     Dlegates the lookup to the crud layer.
     """
     return crud.get_borrowed_for_user(db, user_id)
+
+
+@router.delete("/{user_id}/borrowed/{book_id}", response_model=schemas.BorrowedBase)
+def delete_borrowed_record(user_id: int, book_id: int, db: Session = Depends(get_db)):
+    """
+    Delete a borrowed book record for a user.
+
+    - `user_id`: The ID of the user.
+    - `book_id`: The ID of the book.
+    - `db`: SQLAlchemy session.
+    
+    Returns the deleted borrow record or raises a 404 error if not found.
+    """
+    deleted_record = crud.delete_borrowed_record(db, user_id, book_id)
+    
+    if not deleted_record:
+        raise HTTPException(status_code=404, detail="Borrow record not found")
+    
+    return deleted_record

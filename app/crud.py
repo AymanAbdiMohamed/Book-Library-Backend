@@ -16,6 +16,15 @@ def create_genre(db: Session, genre: schemas.GenreCreate):
     return db_genre
 
 
+def delete_genre(db: Session, genre_id: int):
+    db_genre = db.query(models.Genre).filter(models.Genre.id == genre_id).first()
+    if not db_genre:
+        return None
+    db.delete(db_genre)
+    db.commit()
+    return db_genre
+
+
 # Books
 def get_books(db: Session):
     return db.query(models.Book).all()
@@ -38,6 +47,15 @@ def create_book(db: Session, book: schemas.BookCreate):
     return db_book
 
 
+def delete_book(db: Session, book_id: int):
+    db_book = db.query(models.Book).filter(models.Book.id == book_id).first()
+    if not db_book:
+        return None
+    db.delete(db_book)
+    db.commit()
+    return db_book
+
+
 # Users
 def get_users(db: Session):
     return db.query(models.User).all()
@@ -48,6 +66,15 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+    return db_user
+
+
+def delete_user(db: Session, user_id: int):
+    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not db_user:
+        return None
+    db.delete(db_user)
+    db.commit()
     return db_user
 
 
@@ -86,3 +113,19 @@ def return_book(db: Session, borrow: schemas.BorrowedCreate):
 
 def get_borrowed_for_user(db: Session, user_id: int):
     return db.query(models.BorrowedBooks).filter(models.BorrowedBooks.user_id == user_id).all()
+
+
+def delete_borrowed_record(db: Session, user_id: int, book_id: int):
+    record = (
+        db.query(models.BorrowedBooks)
+        .filter(
+            models.BorrowedBooks.user_id == user_id,
+            models.BorrowedBooks.book_id == book_id,
+        )
+        .first()
+    )
+    if not record:
+        return None
+    db.delete(record)
+    db.commit()
+    return record

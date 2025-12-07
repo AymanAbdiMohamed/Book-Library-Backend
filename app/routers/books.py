@@ -36,3 +36,21 @@ def book_by_genre(genre_id: int, db: Session = Depends(get_db)):
     # genre_id: the ID of the genre to filter books by
     # delegates the filtering logic to the CRUD layer
     return crud.get_books_by_genre(db, genre_id=genre_id)
+
+
+@router.delete("/{book_id}", response_model=schemas.Book)
+def delete_book(book_id: int, db: Session = Depends(get_db)):
+    """
+    Delete a book by ID.
+
+    - `book_id`: The ID of the book to delete.
+    - `db`: SQLAlchemy session.
+    
+    Returns the deleted book or raises a 404 error if not found.
+    """
+    deleted_book = crud.delete_book(db, book_id)
+    
+    if not deleted_book:
+        raise HTTPException(status_code=404, detail="Book not found")
+    
+    return deleted_book

@@ -43,3 +43,21 @@ def list_genres(db: Session = Depends(get_db)):
     - Uses the CRUD layer to fetch all genres.
     """
     return crud.get_genres(db)
+
+
+@router.delete("/{genre_id}", response_model=schemas.Genre)
+def delete_genre(genre_id: int, db: Session = Depends(get_db)):
+    """
+    Delete a genre by ID.
+
+    - `genre_id`: The ID of the genre to delete.
+    - `db`: SQLAlchemy session.
+    
+    Returns the deleted genre or raises a 404 error if not found.
+    """
+    deleted_genre = crud.delete_genre(db, genre_id)
+    
+    if not deleted_genre:
+        raise HTTPException(status_code=404, detail="Genre not found")
+    
+    return deleted_genre
